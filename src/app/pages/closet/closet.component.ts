@@ -1,15 +1,17 @@
 import { Component } from '@angular/core';
 import {NgForOf} from "@angular/common";
 import {SlickCarouselModule} from "ngx-slick-carousel";
+import { NavbarComponent } from "../../components/navbar/navbar.component";
 
 @Component({
-  selector: 'app-closet',
-  standalone: true,
-  imports: [
-    NgForOf, SlickCarouselModule
-  ],
-  templateUrl: './closet.component.html',
-  styleUrl: './closet.component.scss'
+    selector: 'app-closet',
+    standalone: true,
+    templateUrl: './closet.component.html',
+    styleUrl: './closet.component.scss',
+    imports: [
+        NgForOf, SlickCarouselModule,
+        NavbarComponent
+    ]
 })
 export class ClosetComponent {
   slides = [
