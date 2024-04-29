@@ -8,8 +8,17 @@ import { Component } from '@angular/core';
   styleUrl: './navbar.component.scss'
 })
 export class NavbarComponent {
+
   title = 'our-closet-gui';
   lightMode = false;
+
+  variabile=false;
+
+  ngOnInit(){
+    
+  }
+
+
   switchTheme() {
     const body= document.body as HTMLElement
     if(!this.lightMode) {

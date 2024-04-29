@@ -12,31 +12,30 @@ import { AuthService } from '../../auth/auth.service';
   styleUrl: './login.component.scss'
 })
 export class LoginComponent {
-  serverError: string="";
+
+  serverError: string = "";
 
 
-  constructor(private authService:AuthService) { }
+  constructor(private authService: AuthService) { }
 
   onSubmit(form: NgForm) {
 
-    const body={
-      "username":form.value.username,
+    const body = {
+      "username": form.value.username,
       "password": form.value.password
     }
 
-    this.authService.login(body).subscribe((response)=>{
-      console.log(response.message)
+    this.authService.login(body).subscribe((response) => {
+      console.log(response)
+
+      this.authService.isLoggedIn = true;
+      
+      localStorage.setItem("TKN", response.token);
+
     })
-  
-  
- 
 
     console.log(form.value.password, form.value.username)
 
-
   }
-
-
-
 
 }

@@ -1,6 +1,7 @@
 import { ActivatedRouteSnapshot, CanActivateFn, Router, RouterStateSnapshot } from '@angular/router';
 import { AuthService } from './auth.service';
 import { Injectable, inject } from '@angular/core';
+import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -10,14 +11,31 @@ class AdminPermission {
 
   constructor(private router: Router, private authService: AuthService) { }
 
-  canActivate(next: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean {
-    if (this.authService.isAuthenticated()) {
-      return true;
+  canActivate(next: ActivatedRouteSnapshot, state: RouterStateSnapshot): any {
+
+    const localStorage = document.defaultView?.localStorage;
+    const token = localStorage?.getItem("TKN");
+
+
+    if (token) {
+      this.authService.hello().subscribe((response) => {
+        return true;
+
+      }, (error) => {
+        
+        return false;
+      }
+      )
+
+
     } else {
       return false;
     }
 
+
   }
+
+
 
 
 }
