@@ -22,7 +22,6 @@ export class CreazioneQrModalComponent {
   qrconfig: any = {
     width: 150,
     height: 150,
-    image: "https://upload.wikimedia.org/wikipedia/commons/thumb/7/79/1960s_Gucci_Logo.svg/413px-1960s_Gucci_Logo.svg.png",
     margin: 5,
     dotsOptions: {
       color: "#000000",
@@ -38,13 +37,13 @@ export class CreazioneQrModalComponent {
   }
   carte: any = [
     {
-      id: 1,
+      id: '1',
       owner_id: '0001',
       manufacturer_id: '0001',
       capo_id: '0001',
     },
     {
-      id: 2,
+      id: '2',
       owner_id: '0001',
       manufacturer_id: '0001',
       capo_id: '0001',
@@ -63,7 +62,7 @@ export class CreazioneQrModalComponent {
 
   addQr() {
       this.carte.push({
-        id: this.carte.length + 1,
+        id: (this.carte.length + 1).toString(),
         owner_id: '0001',
         manufacturer_id: '0001',
         capo_id: '0001',
