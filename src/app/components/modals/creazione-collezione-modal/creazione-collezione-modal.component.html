@@ -1,0 +1,9 @@
+<div class="modal-header">
+  <h4 class="modal-title" id="modal-basic-title">Aggiungi una collezione</h4>
+  <button type="button" class="btn-close" aria-label="Close" (click)="activeModal.dismiss('Cross click')">
+  </button>
+</div>
+<div class="modal-body">
+  <input [(ngModel)]="collezione.nome" class="form-control mb-2" placeholder="Nome" type="text">
+  <button (click)="passBack()" type="submit" class="btn btn-outline-success w-100">Aggiungi</button>
+</div>

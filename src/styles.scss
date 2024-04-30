@@ -4,3 +4,17 @@
 .cursor-pointer:hover {
   cursor: pointer;
 }
+
+@media print {
+  :not(canvas, .printMe) {
+    visibility: hidden;
+  }
+}
+
+@media print {
+  .printMe {
+    canvas {
+      visibility: visible;
+    }
+  }
+}
