@@ -22,13 +22,14 @@ class AdminPermission {
         return true;
 
       }, (error) => {
-        
+        this.router.navigate(['/login']);
         return false;
       }
       )
 
 
     } else {
+      this.router.navigate(['/login']);
       return false;
     }
 

@@ -19,19 +19,12 @@
 
 <nav class="navbar navbar-expand-lg bg-body-tertiary shadow-sm">
   <div class="container-fluid">
-    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarToggleExternalContent"
-      aria-controls="navbarToggleExternalContent" aria-expanded="false" aria-label="Toggle navigation">
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarToggleExternalContent" aria-controls="navbarToggleExternalContent" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
-    <a class="navbar-brand title">🗄️ OurCloset</a>
+    <img src="assets/ourcloset-logo.png" class="cursor-pointer" routerLink="home" width="300vw">
     <div class="vr d-none d-md-block"></div>
-    
-      @if (variabile) {
-        <a class="navbar-brand ms-lg-3 title"> 🏪 La bottega di Peppino </a>
-      }
-      
-
-      
+    <a class="navbar-brand ms-lg-3 title" routerLinkActive="color-white" routerLink="manufacturer"><i class="bi bi-shop-window"></i> La bottega di Peppino </a>
     <div class="vr d-none d-md-block"></div>
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
       <ul class="navbar-nav me-auto mb-2 mb-lg-0">
@@ -51,10 +44,10 @@
     </div>
     <div style="font-size: 30px" class="cursor-pointer" (click)="switchTheme()">
       @if (lightMode) {
-      🌙
+        🌙
       }
       @else {
-      ☀️
+        ☀️
       }
     </div>
     <div class="mx-2 d-none d-md-block">Benvenuto, User</div>
@@ -62,9 +55,7 @@
       <ul class="dropdown-menu dropdown-menu-end">
         <li><a class="dropdown-item" href="#">Profilo</a></li>
         <li><a class="dropdown-item" href="#">Aggiungi prodotto</a></li>
-        <li>
-          <hr class="dropdown-divider">
-        </li>
+        <li><hr class="dropdown-divider"></li>
         <li><a class="dropdown-item" href="#">Gestione prodotti</a></li>
       </ul>
       <div class="nav-link pic-placeholder" role="button" data-bs-toggle="dropdown" aria-expanded="false">VM</div>

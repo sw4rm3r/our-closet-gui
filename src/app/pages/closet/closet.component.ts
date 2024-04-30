@@ -83,6 +83,7 @@ export class ClosetComponent {
 
   openCamera() {
     this.showQr = true;
+    window.scrollTo(0, 0);
     setTimeout(() => { this.handle(this.action, 'start') }, 100);
   }
 }

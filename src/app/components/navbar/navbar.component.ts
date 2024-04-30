@@ -1,9 +1,13 @@
 import { Component } from '@angular/core';
+import {RouterLink, RouterLinkActive} from "@angular/router";
 
 @Component({
   selector: 'app-navbar',
   standalone: true,
-  imports: [],
+  imports: [
+    RouterLinkActive,
+    RouterLink
+  ],
   templateUrl: './navbar.component.html',
   styleUrl: './navbar.component.scss'
 })
@@ -15,7 +19,7 @@ export class NavbarComponent {
   variabile=false;
 
   ngOnInit(){
-    
+
   }
 
 
