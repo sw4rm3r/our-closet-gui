@@ -15,7 +15,9 @@
     <tbody>
     <tr *ngFor="let carta of carte">
       <th scope="row">{{carta.id}}</th>
-      <td class="text-center rounded-2"><ngx-qrcode-styling [data]="carta.id" [ngClass]="carta.toPrint ? 'printMe' : ''" #qrCode [config]="qrconfig"></ngx-qrcode-styling></td>
+      <td class="text-center rounded-2">
+        <ngx-qrcode-styling [data]="carta.id" [ngClass]="carta.toPrint ? 'printMe' : ''" #qrCode [config]="qrconfig"></ngx-qrcode-styling>
+      </td>
       <td><button (click)="print(carta)" class="btn btn-outline-success"> <i class="bi bi-printer"></i></button></td>
     </tr>
     </tbody>

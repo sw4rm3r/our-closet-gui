@@ -62,11 +62,12 @@ export class CreazioneQrModalComponent {
   }
 
   addQr() {
-    this.carte.push({
-      id: this.carte.length + 1,
-      owner_id: '0001',
-      manufacturer_id: '0001',
-      capo_id: '0001',
-    },)
+      this.carte.push({
+        id: this.carte.length + 1,
+        owner_id: '0001',
+        manufacturer_id: '0001',
+        capo_id: '0001',
+      }
+    )
   }
 }
