@@ -1,6 +1,7 @@
 import {Component, ViewChild} from '@angular/core';
 import {NgClass, NgForOf, NgIf} from "@angular/common";
 import {SlickCarouselModule} from "ngx-slick-carousel";
+import { NavbarComponent } from "../../components/navbar/navbar.component";
 import {
   NgxScannerQrcodeComponent,
   NgxScannerQrcodeModule,
@@ -12,7 +13,7 @@ import {
   selector: 'app-closet',
   standalone: true,
   imports: [
-    NgForOf, SlickCarouselModule, NgxScannerQrcodeModule, NgClass, NgIf
+    NgForOf, SlickCarouselModule, NavbarComponent, NgxScannerQrcodeModule, NgClass, NgIf
   ],
   templateUrl: './closet.component.html',
   styleUrl: './closet.component.scss'
