@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { FormsModule, NgForm } from '@angular/forms';
 import { AuthService } from '../../auth/auth.service';
+import {Router} from "@angular/router";
 
 
 
@@ -16,7 +17,7 @@ export class LoginComponent {
   serverError: string = "";
 
 
-  constructor(private authService: AuthService) { }
+  constructor(private authService: AuthService, private router: Router) { }
 
   onSubmit(form: NgForm) {
 
@@ -29,7 +30,7 @@ export class LoginComponent {
       console.log(response)
 
       this.authService.isLoggedIn = true;
-      
+      this.router.navigate(["/app/closet"]);
       localStorage.setItem("TKN", response.token);
 
     })

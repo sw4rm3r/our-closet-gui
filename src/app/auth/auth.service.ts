@@ -2,6 +2,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
+import {environment} from "../../environments/environment";
 
 
 @Injectable({
@@ -9,11 +10,12 @@ import { Observable } from 'rxjs';
 })
 export class AuthService {
 
-  constructor(private http: HttpClient,private router: Router) {}
+  constructor(private http: HttpClient,
+              private router: Router
+  ) {}
 
   isLoggedIn= false;
-
-  apiLogin="http://localhost:8080/rest/home/login";
+  baseUrl = environment.baseUrl;
 
 
   isAuthenticated(){
@@ -22,21 +24,23 @@ export class AuthService {
 
 
   login(body:any):Observable<any>{
-    
-    this.router.navigate(["/closet"]);
-    
-    return this.http.post<any>(this.apiLogin,body);
-    
+
+    return this.http.post<any>(this.baseUrl + 'rest/home/login',body);
+
   }
 
 
-  hello(){
+  getUser(){
     const token=localStorage.getItem("TKN");
 
     let headers = new HttpHeaders();
     headers=headers.set("Authorization","Bearer "+ token);
 
-    return this.http.get<any>('http://localhost:8080/admin',{headers:headers})
+    return this.http.get<any>(this.baseUrl + 'getuser',{headers:headers})
+  }
+
+  becomeArtigiano(body: {nomebrand: string}) {
+      return this.http.post(this.baseUrl + 'beartigiano', body);
   }
 
 

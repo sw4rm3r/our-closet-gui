@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {NgForOf} from "@angular/common";
 import { CanvasJSAngularChartsModule } from '@canvasjs/angular-charts';
 import {NgbModal} from "@ng-bootstrap/ng-bootstrap";
@@ -7,6 +7,9 @@ import {
   CreazioneCollezioneModalComponent
 } from "../../components/modals/creazione-collezione-modal/creazione-collezione-modal.component";
 import {CreazioneQrModalComponent} from "../../components/modals/creazione-qr-modal/creazione-qr-modal.component";
+import {CollectionsService} from "../../services/collections.service";
+import {ModelService} from "../../services/model.service";
+import {catchError, of, switchMap, tap} from "rxjs";
 
 @Component({
   selector: 'app-artigiano',
@@ -18,10 +21,27 @@ import {CreazioneQrModalComponent} from "../../components/modals/creazione-qr-mo
   templateUrl: './artigiano.component.html',
   styleUrl: './artigiano.component.scss'
 })
-export class ArtigianoComponent {
+export class ArtigianoComponent implements OnInit {
 
-  constructor(private modalService: NgbModal) {
+  constructor(private modalService: NgbModal,
+              private collectionService: CollectionsService,
+              private modelService: ModelService) {
   }
+
+  ngOnInit(): void {
+    this.getCollezioni().subscribe();
+  }
+
+  getCollezioni() {
+    return this.collectionService.getUserCollections().pipe(
+      tap(response => this.collezioni = response),
+      catchError(err => {
+        console.error(err);
+        return of(err);
+      })
+    )
+  }
+
   slides = [
     {nome: "Maglietta Gucci", rank: '1', soldQuantity: '2203', img: "https://images.stockx.com/images/Gucci-Gucci-Blade-Print-T-shirt-Black-Red-White.jpg?fit=fill&bg=FFFFFF&w=480&h=320&fm=webp&auto=compress&dpr=2&trim=color&updated_at=1638285845&q=60", descrizione: 'Test'},
     {nome: "Maglietta D&G", rank: '2', soldQuantity: '212', img: "https://www.dolcegabbana.com/dw/image/v2/BKDB_PRD/on/demandware.static/-/Sites-15/default/dw72e0ef60/images/zoom/G8OA3TFU7EQ_N0000_0.jpg?sw=740&sh=944", descrizione: 'Test'},
@@ -56,44 +76,20 @@ export class ArtigianoComponent {
   lineChartOptions:any = {
     responsive: true
   };
-  collezioni = [
-    {
-      nome: 'Collezione autunno/inverno',
-      data_creazione: '12/01/2024',
-      id: 1,
-      capi: [{
-        nome: 'Maglietta Gucci',
-        img: 'https://images.stockx.com/images/Gucci-Gucci-Blade-Print-T-shirt-Black-Red-White.jpg?fit=fill&bg=FFFFFF&w=480&h=320&fm=webp&auto=compress&dpr=2&trim=color&updated_at=1638285845&q=60',
-        id: '0001'
-      }, {
-        nome: 'Giacca gucci',
-        img: 'https://img.mytheresa.com/1094/1238/100/jpeg/catalog/product/1d/P00613431.jpg',
-        id: '0002'
-      }]
-    },
-    {
-      nome: 'Collezione primavera/estate',
-      data_creazione: '13/01/2024',
-      id: 2,
-      capi: [{
-        nome: 'Maglietta D&G',
-        img: 'https://www.dolcegabbana.com/dw/image/v2/BKDB_PRD/on/demandware.static/-/Sites-15/default/dw72e0ef60/images/zoom/G8OA3TFU7EQ_N0000_0.jpg?sw=740&sh=944',
-        id: '0003'
-      },
-      {
-        nome: 'Giacca D&G',
-        img: 'https://www.dolcegabbana.com/dw/image/v2/BKDB_PRD/on/demandware.static/-/Sites-15/default/dw72e0ef60/images/zoom/G8OA3TFU7EQ_N0000_0.jpg?sw=740&sh=944',
-        id: '0004'
-      }
-      ]
-    }
-  ]
+  collezioni: any[] = []
 
-  openCreaCapoModal() {
+  openCreaCapoModal(idCollezione: number) {
     const modalRef = this.modalService.open(CreazioneCapoModalComponent);
     modalRef.result.then((result) => {
       if (result) {
         console.log(result);
+        this.modelService.createModel({nomemodello: result.nome, imgurl: result.img, collezione: {id: idCollezione} }).pipe(
+          switchMap(() => this.getCollezioni()),
+          catchError(err => {
+            console.error(err);
+            return of(err);
+          })
+        ).subscribe()
       }
     });
   }
@@ -103,6 +99,13 @@ export class ArtigianoComponent {
     modalRef.result.then((result) => {
       if (result) {
         console.log(result);
+        this.collectionService.createCollection({nomeCollezione: result.nome, luogoCreazione: 'Roma', dataCreazione: new Date().toISOString()}).pipe(
+          switchMap(() => this.getCollezioni()),
+          catchError(err => {
+            console.error(err);
+            return of(err);
+          })
+        ).subscribe()
       }
     });
   }

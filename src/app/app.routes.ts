@@ -10,7 +10,7 @@ import {LayoutComponent} from "./pages/layout/layout.component";
 export const routes: Routes = [
   { path: '', title:"OurCloset - Home", component: LoginComponent },
   { path: 'login', title:"OurCloset - Login", component: LoginComponent },
-  { path: 'app', title:"OurCloset - Home", component: LayoutComponent,
+  { path: 'app', title:"OurCloset - Home", component: LayoutComponent, canActivate: [adminGuard],
     children: [
       { path: 'home', title:"OurCloset - Home", component: HomeComponent },
       { path: 'closet', title:"OurCloset - Armadio", component: ClosetComponent ,/*canActivate:[adminGuard]*/},

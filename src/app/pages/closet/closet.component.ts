@@ -1,4 +1,4 @@
-import {Component, ViewChild} from '@angular/core';
+import {Component, OnInit, ViewChild} from '@angular/core';
 import {NgClass, NgForOf, NgIf} from "@angular/common";
 import {SlickCarouselModule} from "ngx-slick-carousel";
 import { NavbarComponent } from "../../components/navbar/navbar.component";
@@ -8,6 +8,8 @@ import {
   ScannerQRCodeConfig,
   ScannerQRCodeResult
 } from "ngx-scanner-qrcode";
+import {ClosetService} from "../../services/closet.service";
+import {tap} from "rxjs";
 
 @Component({
   selector: 'app-closet',
@@ -18,7 +20,7 @@ import {
   templateUrl: './closet.component.html',
   styleUrl: './closet.component.scss'
 })
-export class ClosetComponent {
+export class ClosetComponent implements OnInit {
   test = false;
   cardToAdd: string | undefined;
   slides = [
@@ -59,10 +61,24 @@ export class ClosetComponent {
   };
   showQr = false;
 
+  constructor(private closetService: ClosetService) {
+  }
+
+  ngOnInit() {
+    this.closetService.getUserCloset().pipe(
+      tap((closet: any) => {
+        console.log(closet);
+      })
+    ).subscribe()
+  }
+
   onQrRead($event: ScannerQRCodeResult[]) {
     if($event && $event[0] && $event[0].value) {
       this.showQr = false;
       this.cardToAdd = $event[0].value;
+      this.closetService.getCardById(parseInt(this.cardToAdd)).pipe(
+        tap((card: any) => console.log('carta trovata!!!', card))
+      ).subscribe()
     }
 
   }

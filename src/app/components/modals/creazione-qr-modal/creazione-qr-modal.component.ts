@@ -1,8 +1,10 @@
-import {Component, Input} from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
 import {FormsModule} from "@angular/forms";
 import {NgbActiveModal} from "@ng-bootstrap/ng-bootstrap";
 import {NgClass, NgForOf} from "@angular/common";
 import {NgxQrcodeStylingModule} from "ngx-qrcode-styling";
+import {ClosetService} from "../../../services/closet.service";
+import {catchError, of, switchMap, tap} from "rxjs";
 
 @Component({
   selector: 'app-creazione-qr-modal',
@@ -16,8 +18,8 @@ import {NgxQrcodeStylingModule} from "ngx-qrcode-styling";
   templateUrl: './creazione-qr-modal.component.html',
   styleUrl: './creazione-qr-modal.component.scss'
 })
-export class CreazioneQrModalComponent {
-  constructor(public activeModal: NgbActiveModal) {
+export class CreazioneQrModalComponent implements OnInit {
+  constructor(public activeModal: NgbActiveModal, private cardService: ClosetService) {
   }
   qrconfig: any = {
     width: 150,
@@ -34,22 +36,21 @@ export class CreazioneQrModalComponent {
       crossOrigin: "anonymous",
       margin: 0
     }
-  }
-  carte: any = [
-    {
-      id: '1',
-      owner_id: '0001',
-      manufacturer_id: '0001',
-      capo_id: '0001',
-    },
-    {
-      id: '2',
-      owner_id: '0001',
-      manufacturer_id: '0001',
-      capo_id: '0001',
-    },
-  ]
+  };
+  carte: any = []
   @Input() capo: any;
+
+  ngOnInit(): void {
+    this.getCardsByModel().subscribe();
+  }
+
+  getCardsByModel() {
+    return this.cardService.getCardsByModel(this.capo.idmodello).pipe(
+      tap((cards: any[]) => {
+        this.carte = cards;
+      })
+    );
+  }
 
   print(carta: any): void {
     carta.toPrint = true;
@@ -61,12 +62,19 @@ export class CreazioneQrModalComponent {
   }
 
   addQr() {
-      this.carte.push({
-        id: (this.carte.length + 1).toString(),
-        owner_id: '0001',
-        manufacturer_id: '0001',
-        capo_id: '0001',
+    const payload = {
+      modello: {
+        idmodello: this.capo.idmodello
       }
-    )
+    }
+      this.cardService.creaCarta(payload).pipe(
+        switchMap((res) => {
+          return this.getCardsByModel()
+        }),
+        catchError(err => {
+          console.error(err);
+          return of(err);
+        })
+      ).subscribe(() => this.getCardsByModel().subscribe());
   }
 }

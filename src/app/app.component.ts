@@ -23,7 +23,7 @@ export class AppComponent implements OnInit {
     const localStorage = document.defaultView?.localStorage;
     const token=localStorage?.getItem("TKN");
     if(token){
-      this.AuthService.hello().subscribe((response)=>{
+      this.AuthService.getUser().subscribe((response)=>{
         this.AuthService.isLoggedIn=true;
         this.router.navigate(["/closet"]);
         console.log(response);

@@ -18,7 +18,7 @@ class AdminPermission {
 
 
     if (token) {
-      this.authService.hello().subscribe((response) => {
+      this.authService.getUser().subscribe((response) => {
         return true;
 
       }, (error) => {
