@@ -78,6 +78,7 @@ export class ClosetComponent implements OnInit {
   }
 
   onQrRead($event: ScannerQRCodeResult[]) {
+    console.log($event, 'QR');
     if($event && $event[0] && $event[0].value) {
       this.showQr = false;
       this.cardToAdd = $event[0].value;
