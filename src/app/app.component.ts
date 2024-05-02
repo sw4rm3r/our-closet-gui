@@ -25,7 +25,7 @@ export class AppComponent implements OnInit {
     if(token){
       this.AuthService.getUser().subscribe((response)=>{
         this.AuthService.isLoggedIn=true;
-        this.router.navigate(["/closet"]);
+        this.router.navigate(["/app/closet"]);
         console.log(response);
       },(error)=>{
         if(error){

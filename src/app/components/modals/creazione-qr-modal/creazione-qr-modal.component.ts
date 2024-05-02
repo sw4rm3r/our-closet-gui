@@ -24,7 +24,7 @@ export class CreazioneQrModalComponent implements OnInit {
   qrconfig: any = {
     width: 150,
     height: 150,
-    margin: 5,
+    margin: 20,
     dotsOptions: {
       color: "#000000",
       type: "dots"
