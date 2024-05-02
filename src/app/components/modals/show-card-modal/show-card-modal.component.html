@@ -1,0 +1,22 @@
+<div class="modal-header">
+  <h4 class="modal-title" id="modal-basic-title">Capo riconosciuto - {{modello.nomemodello}}</h4>
+  <button type="button" class="btn-close" aria-label="Close" (click)="activeModal.dismiss('Cross click')">
+  </button>
+</div>
+<div class="modal-body">
+  <div class="card" style="font-size: 12px">
+    <img style="object-fit: cover" height="150" width="280" src="{{modello.imgurl}}" class="card-img-top" alt="...">
+    <div class="card-body">
+      <h5 class="card-title">{{modello.nomemodello}}</h5>
+      <!--<p class="card-text">Una magnifica maglietta Gucci della nuova collezione 2024</p>-->
+    </div>
+    <ul class="list-group list-group-flush">
+      <li class="list-group-item"><b>🤵🏼 Produttore:</b> {{modello.nomemodello}}</li>
+      <li class="list-group-item"><b>👕 Materiali: </b>Cotone 100%</li>
+      <li class="list-group-item"><b>🔢 N°: </b> {{modello.idmodello}}</li>
+    </ul>
+  </div>
+  <button (click)="activeModal.dismiss()" class="btn btn-outline-success w-100 mb-3">Riscatta</button>
+  <button (click)="activeModal.dismiss()" class="btn btn-outline-info w-100 mb-3">Colleziona</button>
+  <button (click)="activeModal.dismiss()" type="submit" class="btn btn-outline-danger w-100">Chiudi</button>
+</div>

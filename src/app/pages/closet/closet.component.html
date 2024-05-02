@@ -1,15 +1,15 @@
 <div class="row">
-  <div class="col-12 col-md-3">
+  <div class="col-12 col-md-3" *ngIf="modelloSelezionato">
     <div class="card" style="font-size: 12px">
-      <img style="object-fit: cover" height="150" width="280" src="https://media.gucci.com/style/DarkGray_Center_0_0_980x980/1686932239/565806_XJAZY_9037_001_100_0000_Light-T-shirt-con-stampa-Gucci-Blade.jpg" class="card-img-top" alt="...">
+      <img style="object-fit: cover" height="150" width="280" src="{{modelloSelezionato?.imgurl}}" class="card-img-top" alt="...">
       <div class="card-body">
-        <h5 class="card-title">Gucci</h5>
-        <p class="card-text">Una magnifica maglietta Gucci della nuova collezione 2024</p>
+        <h5 class="card-title">{{modelloSelezionato?.nomemodello}}</h5>
+        <!--<p class="card-text">Una magnifica maglietta Gucci della nuova collezione 2024</p>-->
       </div>
       <ul class="list-group list-group-flush">
-        <li class="list-group-item"><b>🤵🏼 Produttore:</b> Gucci</li>
+        <li class="list-group-item"><b>🤵🏼 Produttore:</b> {{modelloSelezionato?.nomemodello}}</li>
         <li class="list-group-item"><b>👕 Materiali: </b>Cotone 100%</li>
-        <li class="list-group-item"><b>🔢 N°: </b> 001</li>
+        <li class="list-group-item"><b>🔢 N°: </b> {{modelloSelezionato?.idmodello}}</li>
       </ul>
       <div class="card-body">
         <a href="#" class="card-link">Vendi</a>
@@ -23,8 +23,8 @@
       <div class="card-body overflow-auto" style="max-height: 500px">
         <div class="container">
           <div class="row text-center m-auto">
-            <div class="col-4 col-md-2 p-0 m-0 text-center m-0"  *ngFor="let _ of [].constructor(20)">
-                <img src="https://media.gucci.com/style/DarkGray_Center_0_0_980x980/1686932239/565806_XJAZY_9037_001_100_0000_Light-T-shirt-con-stampa-Gucci-Blade.jpg" class="clothing-icon">
+            <div class="col-4 col-md-2 p-0 m-0 text-center m-0"  *ngFor="let elemento of closet">
+                <img (click)="selezionaModello(elemento.modello)" src="{{elemento.modello.imgurl}}" class="clothing-icon">
             </div>
           </div>
         </div>
@@ -90,4 +90,5 @@
 <div *ngIf="showQr" style="position:absolute;top:0;left:0; width: 100%; height: 100%">
   <ngx-scanner-qrcode [isBeep]="false" (event)="onQrRead($event)" [config]="config" #action="scanner"></ngx-scanner-qrcode>
 </div>
+
 

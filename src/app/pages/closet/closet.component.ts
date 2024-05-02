@@ -10,6 +10,8 @@ import {
 } from "ngx-scanner-qrcode";
 import {ClosetService} from "../../services/closet.service";
 import {tap} from "rxjs";
+import {NgbModal} from "@ng-bootstrap/ng-bootstrap";
+import {ShowCardModalComponent} from "../../components/modals/show-card-modal/show-card-modal.component";
 
 @Component({
   selector: 'app-closet',
@@ -61,13 +63,16 @@ export class ClosetComponent implements OnInit {
   };
   showQr = false;
 
-  constructor(private closetService: ClosetService) {
+  constructor(private closetService: ClosetService, private modalService: NgbModal) {
   }
+
+  closet: any[] = [];
+  modelloSelezionato: any;
 
   ngOnInit() {
     this.closetService.getUserCloset().pipe(
       tap((closet: any) => {
-        console.log(closet);
+        this.closet = closet;
       })
     ).subscribe()
   }
@@ -77,7 +82,16 @@ export class ClosetComponent implements OnInit {
       this.showQr = false;
       this.cardToAdd = $event[0].value;
       this.closetService.getCardById(parseInt(this.cardToAdd)).pipe(
-        tap((card: any) => console.log('carta trovata!!!', card))
+        tap((card: any) => {
+          console.log('carta trovata!!!', card)
+          const modalRef = this.modalService.open(ShowCardModalComponent);
+          modalRef.componentInstance.modello = card.modello;
+          modalRef.result.then((result) => {
+            if (result) {
+              console.log(result);
+            }
+          });
+        })
       ).subscribe()
     }
 
@@ -101,5 +115,9 @@ export class ClosetComponent implements OnInit {
     this.showQr = true;
     window.scrollTo(0, 0);
     setTimeout(() => { this.handle(this.action, 'start') }, 100);
+  }
+
+  selezionaModello(modello: any) {
+    this.modelloSelezionato = modello;
   }
 }
