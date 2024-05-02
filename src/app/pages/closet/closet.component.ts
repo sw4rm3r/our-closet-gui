@@ -115,7 +115,7 @@ export class ClosetComponent implements OnInit {
   openCamera() {
     this.showQr = true;
     window.scrollTo(0, 0);
-    setTimeout(() => { this.handle(this.action, 'start') }, 100);
+    setTimeout(() => { this.handle(this.action, 'start') }, 1000);
   }
 
   selezionaModello(modello: any) {
