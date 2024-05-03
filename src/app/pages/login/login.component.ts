@@ -1,7 +1,8 @@
-import { Component } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import { FormsModule, NgForm } from '@angular/forms';
 import { AuthService } from '../../auth/auth.service';
 import {Router} from "@angular/router";
+import {response} from "express";
 
 
 
@@ -12,7 +13,7 @@ import {Router} from "@angular/router";
   templateUrl: './login.component.html',
   styleUrl: './login.component.scss'
 })
-export class LoginComponent {
+export class LoginComponent implements OnInit {
 
   serverError: string = "";
 
@@ -27,16 +28,21 @@ export class LoginComponent {
     }
 
     this.authService.login(body).subscribe((response) => {
+      localStorage.setItem("TKN", response.token);
       console.log(response)
-
       this.authService.isLoggedIn = true;
       this.router.navigate(["/app/closet"]);
-      localStorage.setItem("TKN", response.token);
-
     })
 
     console.log(form.value.password, form.value.username)
 
+  }
+
+  ngOnInit(): void {
+    const token = localStorage.getItem('TKN');
+    if (token) {
+      this.router.navigate(["/app/home"]);
+    }
   }
 
 }
